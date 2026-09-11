@@ -1,0 +1,928 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<meta name="description" content="Gerador de sensibilidade para Free Fire por celular, DPI, resolução e estilo."><title>FF Sensi Generator</title><style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 50% -10%,#3b0000 0%,#100000 28%,#050505 65%);
+    color:#fff;
+}
+
+header{
+    padding:28px 18px;
+    text-align:center;
+    border-bottom:1px solid #242424;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(12px);
+}
+
+.logo{
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:#ff2020;
+}
+
+.subtitle{
+    color:#999;
+    margin-top:8px;
+    font-size:14px;
+}
+
+.container{
+    width:min(950px,92%);
+    margin:30px auto 50px;
+}
+
+.card{
+    background:rgba(16,16,16,.92);
+    border:1px solid #292929;
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.card h2{
+    font-size:18px;
+    margin-bottom:18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.field label{
+    display:block;
+    color:#aaa;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+select,input{
+    width:100%;
+    padding:14px;
+    border-radius:11px;
+    border:1px solid #333;
+    background:#0b0b0b;
+    color:#fff;
+    outline:none;
+    font-size:15px;
+}
+
+select:focus,input:focus{
+    border-color:#ff2525;
+}
+
+.dpi-row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+input[type="range"]{
+    padding:0;
+    accent-color:#ff2020;
+}
+
+.dpi-value{
+    min-width:65px;
+    text-align:center;
+    font-weight:bold;
+    color:#ff3333;
+}
+
+button{
+    width:100%;
+    border:0;
+    padding:16px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ff3030,#a40000);
+    color:white;
+    font-weight:900;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow:0 8px 25px rgba(255,0,0,.18);
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    filter:brightness(1.12);
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+.result{
+    display:none;
+}
+
+.result.active{
+    display:block;
+    animation:show .35s ease;
+}
+
+@keyframes show{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.phone-info{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+}
+
+.badge{
+    background:#191919;
+    border:1px solid #303030;
+    border-radius:10px;
+    padding:9px 12px;
+    color:#ccc;
+    font-size:13px;
+}
+
+.badge strong{
+    color:#fff;
+}
+
+.sensi-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.sensi{
+    background:#0b0b0b;
+    border:1px solid #272727;
+    border-radius:13px;
+    padding:16px;
+    text-align:center;
+}
+
+.sensi small{
+    color:#888;
+    display:block;
+    margin-bottom:7px;
+}
+
+.sensi strong{
+    font-size:27px;
+    color:#ff2b2b;
+}
+
+.rud{
+    margin-top:18px;
+    background:#080808;
+    border:1px dashed #ff2929;
+    border-radius:13px;
+    padding:17px;
+}
+
+.rud-title{
+    color:#999;
+    font-size:12px;
+    margin-bottom:7px;
+}
+
+.rud-code{
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:1px;
+    word-break:break-all;
+}
+
+.copy{
+    margin-top:12px;
+    background:#181818;
+    border:1px solid #333;
+    box-shadow:none;
+}
+
+.warning{
+    margin-top:14px;
+    color:#777;
+    font-size:12px;
+    line-height:1.5;
+}
+
+footer{
+    text-align:center;
+    padding:25px;
+    color:#555;
+    font-size:12px;
+}
+
+@media(max-width:650px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .sensi-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .logo{
+        font-size:25px;
+    }
+
+    .container{
+        margin-top:20px;
+    }
+}
+</style></head><body><header>
+    <div class="logo">FF <span>SENSI</span> GENERATOR</div>
+    <div class="subtitle">
+        Sensibilidade calculada para o seu dispositivo
+    </div>
+</header><main class="container"><section class="card">
+
+    <h2>⚙️ Configuração</h2>
+
+    <div class="grid">
+
+        <div class="field">
+            <label>📱 Marca / modelo</label>
+
+            <select id="phone">
+                <option value="infinix_hot50i">Infinix Hot 50i</option>
+                <option value="samsung_a02">Samsung Galaxy A02</option>
+                <option value="samsung_a15">Samsung Galaxy A15</option>
+                <option value="samsung_a16">Samsung Galaxy A16</option>
+                <option value="redmi_note13">Redmi Note 13</option>
+                <option value="poco_x6">POCO X6</option>
+                <option value="moto_g54">Moto G54</option>
+                <option value="iphone_11">iPhone 11</option>
+                <option value="iphone_12">iPhone 12</option>
+                <option value="iphone_13">iPhone 13</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>🖥️ Resolução</label>
+
+            <select id="resolution">
+                <option value="720x1600">720 × 1600</option>
+                <option value="720x1612">720 × 1612</option>
+                <option value="1080x1920">1080 × 1920</option>
+                <option value="1080x2340">1080 × 2340</option>
+                <option value="1080x2400">1080 × 2400</option>
+                <option value="1170x2532">1170 × 2532</option>
+                <option value="custom">Personalizada</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>🎚️ DPI</label>
+
+            <div class="dpi-row">
+                <input
+                    id="dpi"
+                    type="range"
+                    min="240"
+                    max="800"
+                    value="450"
+                >
+
+                <div class="dpi-value">
+                    <span id="dpiValue">450</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label>🎯 Estilo de jogo</label>
+
+            <select id="style">
+                <option value="balanced">⚖️ Equilibrado</option>
+                <option value="headshot">🎯 Capa</option>
+                <option value="rush">⚡ Rush</option>
+                <option value="precision">🔫 Precisão</option>
+                <option value="sniper">🎯 Sniper</option>
+            </select>
+        </div>
+
+    </div>
+
+    <br>
+
+    <button onclick="generate()">
+        ⚡ GERAR SENSIBILIDADE
+    </button>
+
+</section>
+
+
+<section id="result" class="card result">
+
+    <h2>🔥 Sua configuração</h2>
+
+    <div class="phone-info">
+
+        <div class="badge">
+            📱 <strong id="resultPhone"></strong>
+        </div>
+
+        <div class="badge">
+            🎚️ DPI: <strong id="resultDpi"></strong>
+        </div>
+
+        <div class="badge">
+            🎯 <strong id="resultStyle"></strong>
+        </div>
+
+    </div>
+
+
+    <div class="sensi-grid">
+
+        <div class="sensi">
+            <small>Geral</small>
+            <strong id="geral">0</strong>
+        </div>
+
+        <div class="sensi">
+            <small>Ponto Vermelho</small>
+            <strong id="redDot">0</strong>
+        </div>
+
+        <div class="sensi">
+            <small>Mira 2x</small>
+            <strong id="scope2">0</strong>
+        </div>
+
+        <div class="sensi">
+            <small>Mira 4x</small>
+            <strong id="scope4">0</strong>
+        </div>
+
+        <div class="sensi">
+            <small>Mira AWM</small>
+            <strong id="awm">0</strong>
+        </div>
+
+        <div class="sensi">
+            <small>Olhadinha</small>
+            <strong id="freeLook">0</strong>
+        </div>
+
+    </div>
+
+
+    <div class="rud">
+
+        <div class="rud-title">
+            CÓDIGO DA CONFIGURAÇÃO
+        </div>
+
+        <div class="rud-code" id="rud">
+            RUD-0000-0000
+        </div>
+
+        <button class="copy" onclick="copyRud()">
+            📋 COPIAR CÓDIGO
+        </button>
+
+    </div>
+
+    <div class="warning">
+        ⚠️ O RUD é um identificador gerado pelo site para salvar/compartilhar
+        a configuração. Ele não é um código oficial do Free Fire e não altera
+        automaticamente as configurações do jogo.
+    </div>
+
+</section>
+
+</main><footer>
+    FF Sensi Generator • Configurações geradas pelo algoritmo
+</footer><script>
+
+/* ==========================================
+   BANCO DOS DISPOSITIVOS
+========================================== */
+
+const phones = {
+
+    infinix_hot50i:{
+        name:"Infinix Hot 50i",
+        base:168,
+        dpiBase:450
+    },
+
+    samsung_a02:{
+        name:"Samsung Galaxy A02",
+        base:145,
+        dpiBase:400
+    },
+
+    samsung_a15:{
+        name:"Samsung Galaxy A15",
+        base:165,
+        dpiBase:450
+    },
+
+    samsung_a16:{
+        name:"Samsung Galaxy A16",
+        base:165,
+        dpiBase:450
+    },
+
+    redmi_note13:{
+        name:"Redmi Note 13",
+        base:175,
+        dpiBase:480
+    },
+
+    poco_x6:{
+        name:"POCO X6",
+        base:180,
+        dpiBase:500
+    },
+
+    moto_g54:{
+        name:"Moto G54",
+        base:170,
+        dpiBase:450
+    },
+
+    iphone_11:{
+        name:"iPhone 11",
+        base:160,
+        dpiBase:0
+    },
+
+    iphone_12:{
+        name:"iPhone 12",
+        base:165,
+        dpiBase:0
+    },
+
+    iphone_13:{
+        name:"iPhone 13",
+        base:170,
+        dpiBase:0
+    }
+};
+
+
+/* ==========================================
+   AJUSTES DE ESTILO
+========================================== */
+
+const styles = {
+
+    balanced:{
+        name:"Equilibrado",
+        geral:0,
+        red:0,
+        two:0,
+        four:0,
+        awm:0,
+        look:0
+    },
+
+    headshot:{
+        name:"Capa",
+        geral:8,
+        red:12,
+        two:8,
+        four:3,
+        awm:-8,
+        look:5
+    },
+
+    rush:{
+        name:"Rush",
+        geral:12,
+        red:10,
+        two:7,
+        four:2,
+        awm:-12,
+        look:10
+    },
+
+    precision:{
+        name:"Precisão",
+        geral:-7,
+        red:-4,
+        two:-5,
+        four:-8,
+        awm:5,
+        look:-3
+    },
+
+    sniper:{
+        name:"Sniper",
+        geral:-12,
+        red:-8,
+        two:-5,
+        four:-3,
+        awm:14,
+        look:-5
+    }
+};
+
+
+/* ==========================================
+   RESOLUÇÃO
+========================================== */
+
+const resolutions = {
+
+    "720x1600":1.05,
+    "720x1612":1.04,
+    "1080x1920":1.00,
+    "1080x2340":0.98,
+    "1080x2400":0.97,
+    "1170x2532":0.96,
+    "custom":1.00
+
+};
+
+
+/* ==========================================
+   DPI SLIDER
+========================================== */
+
+const dpiInput = document.getElementById("dpi");
+const dpiValue = document.getElementById("dpiValue");
+
+dpiInput.addEventListener("input",()=>{
+    dpiValue.textContent = dpiInput.value;
+});
+
+
+/* ==========================================
+   LIMITAR VALORES
+========================================== */
+
+function clamp(value,min,max){
+
+    return Math.max(
+        min,
+        Math.min(max,Math.round(value))
+    );
+
+}
+
+
+/* ==========================================
+   GERAR CÓDIGO RUD
+========================================== */
+
+function createRud(phone,dpi,resolution,style,values){
+
+    const raw =
+        phone +
+        dpi +
+        resolution +
+        style +
+        values.join("-");
+
+    let hash = 0;
+
+    for(let i=0;i<raw.length;i++){
+
+        hash =
+            ((hash << 5) - hash) +
+            raw.charCodeAt(i);
+
+        hash |= 0;
+    }
+
+    hash = Math.abs(hash);
+
+    const a = String(hash).padStart(8,"0");
+
+    const b =
+        String(
+            (hash * 7919) % 1000000
+        ).padStart(6,"0");
+
+    return "RUD-" +
+        a.substring(0,4) +
+        "-" +
+        a.substring(4,8) +
+        "-" +
+        b;
+
+}
+
+
+/* ==========================================
+   GERADOR PRINCIPAL
+========================================== */
+
+function generate(){
+
+    const phoneKey =
+        document.getElementById("phone").value;
+
+    const resolutionKey =
+        document.getElementById("resolution").value;
+
+    const dpi =
+        Number(document.getElementById("dpi").value);
+
+    const styleKey =
+        document.getElementById("style").value;
+
+
+    const phone =
+        phones[phoneKey];
+
+    const style =
+        styles[styleKey];
+
+    const resolutionFactor =
+        resolutions[resolutionKey] || 1;
+
+
+    /*
+       CÁLCULO DO DPI
+
+       Quanto maior o DPI em relação
+       ao DPI de referência, maior
+       o ajuste de sensibilidade.
+    */
+
+    let dpiFactor = 0;
+
+    if(phone.dpiBase > 0){
+
+        dpiFactor =
+            (dpi - phone.dpiBase) * 0.055;
+
+    }else{
+
+        // iPhone: DPI do sistema não é
+        // tratado da mesma forma que Android.
+        dpiFactor = 0;
+
+    }
+
+
+    /*
+       BASE
+    */
+
+    const base =
+        phone.base +
+        dpiFactor;
+
+
+    /*
+       CADA MIRA POSSUI UM PESO DIFERENTE.
+    */
+
+    let geral =
+        base +
+        style.geral;
+
+    let redDot =
+        base +
+        3 +
+        style.red;
+
+    let scope2 =
+        base -
+        8 +
+        style.two;
+
+    let scope4 =
+        base -
+        22 +
+        style.four;
+
+    let awm =
+        base -
+        50 +
+        style.awm;
+
+    let freeLook =
+        base +
+        2 +
+        style.look;
+
+
+    /*
+       APLICAÇÃO DA RESOLUÇÃO
+    */
+
+    geral *= resolutionFactor;
+    redDot *= resolutionFactor;
+    scope2 *= resolutionFactor;
+    scope4 *= resolutionFactor;
+    awm *= resolutionFactor;
+    freeLook *= resolutionFactor;
+
+
+    /*
+       LIMITES
+    */
+
+    geral = clamp(geral,0,200);
+    redDot = clamp(redDot,0,200);
+    scope2 = clamp(scope2,0,200);
+    scope4 = clamp(scope4,0,200);
+    awm = clamp(awm,0,200);
+    freeLook = clamp(freeLook,0,200);
+
+
+    const values = [
+        geral,
+        redDot,
+        scope2,
+        scope4,
+        awm,
+        freeLook
+    ];
+
+
+    /*
+       RUD
+    */
+
+    const rud =
+        createRud(
+            phoneKey,
+            dpi,
+            resolutionKey,
+            styleKey,
+            values
+        );
+
+
+    /*
+       MOSTRAR RESULTADO
+    */
+
+    document.getElementById("result").classList.add("active");
+
+    document.getElementById("resultPhone").textContent =
+        phone.name;
+
+    document.getElementById("resultDpi").textContent =
+        dpi;
+
+    document.getElementById("resultStyle").textContent =
+        style.name;
+
+
+    document.getElementById("geral").textContent =
+        geral;
+
+    document.getElementById("redDot").textContent =
+        redDot;
+
+    document.getElementById("scope2").textContent =
+        scope2;
+
+    document.getElementById("scope4").textContent =
+        scope4;
+
+    document.getElementById("awm").textContent =
+        awm;
+
+    document.getElementById("freeLook").textContent =
+        freeLook;
+
+    document.getElementById("rud").textContent =
+        rud;
+
+
+    /*
+       SALVAR ÚLTIMA CONFIGURAÇÃO
+    */
+
+    const config = {
+
+        phone:phoneKey,
+        resolution:resolutionKey,
+        dpi:dpi,
+        style:styleKey,
+        values:values,
+        rud:rud
+
+    };
+
+    localStorage.setItem(
+        "ff_last_config",
+        JSON.stringify(config)
+    );
+
+
+    /*
+       ROLAR ATÉ O RESULTADO
+    */
+
+    document.getElementById("result")
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+}
+
+
+/* ==========================================
+   COPIAR RUD
+========================================== */
+
+function copyRud(){
+
+    const text =
+        document.getElementById("rud").textContent;
+
+    navigator.clipboard.writeText(text)
+        .then(()=>{
+
+            const button =
+                document.querySelector(".copy");
+
+            button.textContent =
+                "✅ COPIADO!";
+
+            setTimeout(()=>{
+
+                button.textContent =
+                    "📋 COPIAR CÓDIGO";
+
+            },1500);
+
+        })
+        .catch(()=>{
+
+            alert("Não foi possível copiar automaticamente.");
+
+        });
+
+}
+
+
+/* ==========================================
+   RESTAURAR ÚLTIMA CONFIGURAÇÃO
+========================================== */
+
+window.addEventListener("load",()=>{
+
+    const saved =
+        localStorage.getItem("ff_last_config");
+
+    if(!saved) return;
+
+    try{
+
+        const config =
+            JSON.parse(saved);
+
+        document.getElementById("phone").value =
+            config.phone;
+
+        document.getElementById("resolution").value =
+            config.resolution;
+
+        document.getElementById("dpi").value =
+            config.dpi;
+
+        document.getElementById("dpiValue").textContent =
+            config.dpi;
+
+        document.getElementById("style").value =
+            config.style;
+
+    }catch(e){
+
+        console.log("Configuração anterior inválida.");
+
+    }
+
+});
+
+</script></body>
+</html>
